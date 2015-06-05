@@ -1,7 +1,5 @@
 var log = require('../lib/log');
 
-
-
 describe('log', function() {
 	describe('log\'s color ', function() {
 		it('should be white', function() {
@@ -14,13 +12,12 @@ describe('log', function() {
 		})
 	})
 	describe('log.warn\'s color', function() {
-		it('should be red', function() {
+		it('should be yellow', function() {
 			log.warn('warning message!');
-
 		})
 	})
 	describe('log.error\'s color', function() {
-		it('should be yellow', function() {
+		it('should be red', function() {
 			log.err('error message!');
 		})
 	})
