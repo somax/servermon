@@ -4,17 +4,15 @@
 
 /**
  * ServerMon 20150602
- * somaxj@163.com
+ * maxiaojun<somaxj@163.com> @ jkr3
  */
 
 var 
-    // Reaper = require('./lib/reaper'),
-    // Reporter = require('./lib/reporter'),
     argv = require('argv'),
     _package = require('./package.json'),
-    // log = require('./lib/log'),
-    // mailer = require('./lib/reporter-mailer');
-    Servermon = require('./lib/servermon');
+    Servermon = require('./lib/servermon'),
+    log = require('./lib/log'),
+    guid = require('guid');
 
 var servermon = new Servermon();
 
@@ -24,106 +22,75 @@ argv.option([{
     short: 'r',
     type: 'boolean',
     description: 'Run as reaper.',
-    example: "'servermon --reaper' or 'servermon -c'"
+    example: "'servermon -r' or 'servermon --reaper'"
 }, {
     name: 'server',
     short: 's',
     type: 'boolean',
     description: 'Run as server.',
-    example: "'servermon --server' or 'servermon -s'"
-}, {
-    name: 'port',
+    example: "'servermon -s' or 'servermon --server'"
+}, {name: 'host',
+    short: 'H',
+    type: 'string',
+    description: 'Specify the server\'s hostname. (default: 127.0.0.1)',
+    example: "'servermon -r -H 127.0.0.1' or 'servermon --reaper --host=127.0.0.1'"
+},{    name: 'port',
     short: 'p',
     type: 'int',
-    description: 'Specific the port. use whith --server or --client.',
-    example: "'servermon --port=1337' or 'servermon -p 1337'"
+    description: 'Specify the port. (default: 1337)',
+    example: "'servermon -s -p 1337' or 'servermon --server --port=1337' or 'servermon -r -p 1337' or 'servermon --reaper --port=1337'"
 }, {
-    name: 'version',
-    short: 'v',
+    name: 'reaperid',
+    short: 'n',
     type: 'string',
-    description: 'print servermon\'s version.',
-    example: "'servermon --version' or 'servermon -v'"
+    description: 'Specify the reaper\'s id.',
+    example: "'servermon -id serv1' or 'servermon --reaperid serv1'"
 }]);
+
+
+argv.version( _package.version );
 
 // get description from package.json
 argv.info(_package.description);
 
+// get options(arguments)
 var options = argv.run().options;
 
-var port = options.port || 1337;
+// set default 
+var port = options.port;
+var host = options.host;
 
+// dev 
+// todo use NODE_ENV
+var reaperId = options.reaperid //|| guid.raw();
 
-
-// if no option , print help message.
-if (JSON.stringify(options) === '{}') {
-    argv.help();
-    return;
+if( options.reaper && !reaperId || reaperId === 'true'){
+    log.err('Please specify reaperId,Trigger \'servermon -h\' for more details.');
+    return
 }
+// // if no option , print help message.
+// if (JSON.stringify(options) === '{}') {
+//     argv.help();
+//     return;
+// }
 
-// print version
-if (options.version) {
-    // get version from package.json
-    console.log(_package.name + ' Version:' + _package.version)
-    return;
-}
+// // print version
+// if (options.version) {
+//     // get version from package.json
+//     console.log(_package.name + ' Version:' + _package.version)
+//     return;
+// }
 
 //run as server
 if (options.server) {
-    servermon.server();
-    // var reporter = new Reporter();
-    // reporter.use(function(data,next){
-    //     log('++++++++++ middleware log >>> ',data)
-    //     next();
-    // })
-
-    // var SocketServer = require('./lib/socket-server');
-    // var server = new SocketServer(port);
-
-    // server.start(function() {
-    //     log('Servermon run as server, port: ' + port);
-    // });
-
-    // //test 
-    // server.on('connection', function() {
-    //     server.sendData('test data from server!')
-    // })
-
-
-    // server.on('data',function (data) {
-    //     log('<<< got data <<')
-    //     reporter.report(data);
-
-    // })
-    // 
-
+    servermon.server(port,host);
 }
 
 // run as client (reper)
-if (options.reaper) {
+else if (options.reaper) {
+    servermon.reaper(reaperId,port,host);
+}
 
-    servermon.reaper();
-    // var SocketClient = require('./lib/socket-client');
-
-    // // var client = new SocketClient();
-    // var client = new SocketClient(port, '127.0.0.1')
-
-    // client.connect();
-
-    // log(SocketClient)
-
-    // var reaper = new Reaper();
-
-    // var reportData = function() {
-    //     log('report data>>');
-    //     // reap server status
-    //     var data = reaper.reap();
-
-    //     // send to server
-    //     client.sendData(data);
-    //     setTimeout(reportData, 2000);
-    // }
-
-    // reportData();
-
-
+else{
+    argv.help();
 }

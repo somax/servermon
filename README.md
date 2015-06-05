@@ -8,6 +8,7 @@ Install with npm
 
     npm install servermon
 
+
 Require in your script
 
 ```javascript
@@ -20,6 +21,12 @@ Require in your script
 
 ```javascript
 
+```
+
+## Test
+```bash
+$ npm install -g mocha
+$ mocha
 ```
 
 ## License

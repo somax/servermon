@@ -13,7 +13,7 @@ reporter.use(function(data, next) {
 })
 
 reporter.use(function(data, next) {
-	a;
+	GotSomeError;
 	next();
 })
 
