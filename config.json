@@ -1,0 +1,9 @@
+{
+	"mailer": {
+		"service": "163",
+		"auth": {
+			"user": "jkr3_servermon@163.com",
+			"pass": "dXN2a3FvcXl1cnd2bHd6ZQ"
+		}
+	}
+}

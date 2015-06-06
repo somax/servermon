@@ -5,6 +5,9 @@
 /**
  * ServerMon 20150602
  * maxiaojun<somaxj@163.com> @ jkr3
+ *
+ * index.js
+ * 这是入口文件，主要配置可选参数
  */
 
 var 
@@ -44,7 +47,13 @@ argv.option([{
     short: 'n',
     type: 'string',
     description: 'Specify the reaper\'s id.',
-    example: "'servermon -id serv1' or 'servermon --reaperid serv1'"
+    example: "'servermon -n serv1' or 'servermon --reaperid=serv1'"
+}, {
+    name: 'interval',
+    short: 'i',
+    type: 'int',
+    description: 'Specify the reaper\'s interval.',
+    example: "'servermon -i 5000' or 'servermon --interval=5000'"
 }]);
 
 
@@ -59,36 +68,28 @@ var options = argv.run().options;
 // set default 
 var port = options.port;
 var host = options.host;
+var interval = options.interval;
 
 // dev 
 // todo use NODE_ENV
 var reaperId = options.reaperid //|| guid.raw();
 
-if( options.reaper && !reaperId || reaperId === 'true'){
-    log.err('Please specify reaperId,Trigger \'servermon -h\' for more details.');
-    return
-}
-// // if no option , print help message.
-// if (JSON.stringify(options) === '{}') {
-//     argv.help();
-//     return;
+// if( options.reaper && !reaperId || reaperId === 'true'){
+//     log.err('Please specify reaperId,Trigger \'servermon -h\' for more details.');
+//     return
 // }
 
-// // print version
-// if (options.version) {
-//     // get version from package.json
-//     console.log(_package.name + ' Version:' + _package.version)
-//     return;
-// }
 
 //run as server
 if (options.server) {
+    log.info('Servermon run as server.')
     servermon.server(port,host);
 }
 
 // run as client (reper)
 else if (options.reaper) {
-    servermon.reaper(reaperId,port,host);
+    log.info('Servermon run as reaper.')
+    servermon.reaper(reaperId,port,host,interval);
 }
 
 else{

@@ -4,7 +4,7 @@
   "description": "Reap and report the server's status.",
   "main": "bin/servermon",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "author": "Somax Ma<somaxj@163.com>",
   "license": "MIT",

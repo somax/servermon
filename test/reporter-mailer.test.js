@@ -1,8 +1,6 @@
 var reporter_mailer = require('../lib/reporter-mailer');
 var assert = require("assert");
 
-
-
 var testData = {
 	"t": "2015-06-05T04:59:23.860Z",
 	"id": "testId",
