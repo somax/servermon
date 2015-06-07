@@ -9,12 +9,10 @@ Install with npm
     npm install servermon
 
 
-Run as server
-	./bin/servermon -s
+Run as server    `./bin/servermon -s`
 
 
-Run as reaper
-	./bin/servermon -r
+Run as reaper    `./bin/servermon -r`
 
 Options
 	--help, -h
@@ -53,6 +51,10 @@ Options
 Data storage
 
 	/db.json
+
+Config
+
+    /config.json
 
 ### Example
 ```javascript
