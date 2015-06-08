@@ -4,6 +4,17 @@
 		"auth": {
 			"user": "jkr3_servermon@163.com",
 			"pass": "dXN2a3FvcXl1cnd2bHd6ZQ"
-		}
+		},
+		"mailto":"jkr3_servermon@163.com",
+		"reportDataNum":10
+	},
+	"checker":{
+		"freemem_percent":1.5
+	},
+	"reaper":{
+		"interval":6000
+	},
+	"reporterStorage":{
+		"MaxStoreNum":100
 	}
 }

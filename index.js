@@ -72,7 +72,7 @@ var interval = options.interval;
 
 // dev 
 // todo use NODE_ENV
-var reaperId = options.reaperid //|| guid.raw();
+var reaperId = options.reaperid; //|| guid.raw();
 
 // if( options.reaper && !reaperId || reaperId === 'true'){
 //     log.err('Please specify reaperId,Trigger \'servermon -h\' for more details.');
@@ -82,13 +82,11 @@ var reaperId = options.reaperid //|| guid.raw();
 
 //run as server
 if (options.server) {
-    log.info('Servermon run as server.')
     servermon.server(port,host);
 }
 
 // run as client (reper)
 else if (options.reaper) {
-    log.info('Servermon run as reaper.')
     servermon.reaper(reaperId,port,host,interval);
 }
 

@@ -15,18 +15,19 @@ var testData = {
 			"irq": 0
 		}]
 	}
-}
+};
 
 var next = function() {};
 
+// 没有正确返回
 describe('reporter_mailer', function() {
-	this.timeout(2000);
-	describe('send mail', function() {
+	this.timeout(5000);
+	describe('send mail (wait 3000ms...)', function() {
 		it('should successful', function(done) {
 			reporter_mailer(testData, next);
-    		setTimeout(done, 1000);
-		})
+    		setTimeout(done, 3000);
+		});
 
-	})
-})
+	});
+});
 

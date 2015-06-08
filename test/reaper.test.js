@@ -23,6 +23,3 @@ describe('Reaper',function(){
 
 	});
 });
-
-
-// www.baidu.com/
