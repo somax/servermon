@@ -5,8 +5,9 @@ var testData = {
 	"t": "2015-06-05T04:59:23.860Z",
 	"id": "testId",
 	"data": {
-		"mf": 46206976,
+		"mf": 4620697600,
 		"mt": 8589934592,
+		"loadavg":[0.3,0.6,0.6],
 		"cpu": [{
 			"user": 55655940,
 			"nice": 0,
@@ -26,7 +27,7 @@ var assert = require("assert");
 var next = function() {};
 
 // 没有正确返回
-describe('reporter_mailer', function() {
+describe('reporter_mailer.js', function() {
 	this.timeout(10000);
 	beforeEach(function(done) {
 		var status = storage.get('status') || {};

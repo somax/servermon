@@ -18,7 +18,7 @@ var testData = {
 			"irq": 0
 		}]
 	}
-}
+};
 var next = function() {};
 
 
@@ -28,17 +28,17 @@ describe('reporter_storage', function() {
 
 		it('length should be 1', function() {
 			reporter_storage(testData, next);
-			assert.equal(storage.get('status').testId.data.length, 1)
-		})
+			assert.equal(storage.get('status').testId.data.length, 1);
+		});
 		it('add data should be success', function() {
-			assert.deepEqual(storage.get('status').testId.data[0], testData)
-		})
+			assert.deepEqual(storage.get('status').testId.data[0], testData);
+		});
 
 		it('reset data',function () {
-			var status = storage.get('status')
+			var status = storage.get('status');
 			delete status.testId;
 			storage.set('status', status);
-		})
+		});
 
-	})
-})
+	});
+});

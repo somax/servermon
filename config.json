@@ -9,8 +9,8 @@
 		"reportDataNum":10
 	},
 	"checker":{
-		"freememPercent":1.5,
-		"loadAvg15":5,
+		"freeMemPercent":1.5,
+		"loadAvg":0.7,
 		"count":3
 	},
 	"reaper":{
