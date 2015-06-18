@@ -10,7 +10,7 @@
  * 这是入口文件，主要配置可选参数
  */
 
-var 
+var
     argv = require('argv'),
     _package = require('./package.json'),
     Servermon = require('./lib/servermon'),
@@ -32,12 +32,14 @@ argv.option([{
     type: 'boolean',
     description: 'Run as server.',
     example: "'servermon -s' or 'servermon --server'"
-}, {name: 'host',
+}, {
+    name: 'host',
     short: 'H',
     type: 'string',
     description: 'Specify the server\'s hostname. (default: 127.0.0.1)',
     example: "'servermon -r -H 127.0.0.1' or 'servermon --reaper --host=127.0.0.1'"
-},{    name: 'port',
+}, {
+    name: 'port',
     short: 'p',
     type: 'int',
     description: 'Specify the port. (default: 1337)',
@@ -57,7 +59,7 @@ argv.option([{
 }]);
 
 
-argv.version( _package.version );
+argv.version(_package.version);
 
 // get description from package.json
 argv.info(_package.description);
@@ -72,24 +74,19 @@ var interval = options.interval;
 
 // dev 
 // todo use NODE_ENV
-var reaperId = options.reaperid; //|| guid.raw();
-
-// if( options.reaper && !reaperId || reaperId === 'true'){
-//     log.err('Please specify reaperId,Trigger \'servermon -h\' for more details.');
-//     return
-// }
+var reaperId = options.reaperid;
 
 
 //run as server
 if (options.server) {
-    servermon.server(port,host);
+    servermon.server(port, host);
 }
 
 // run as client (reper)
 else if (options.reaper) {
-    servermon.reaper(reaperId,port,host,interval);
+    servermon.reaper(reaperId, port, host, interval);
 }
-
-else{
+// help
+else {
     argv.help();
 }

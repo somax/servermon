@@ -2,6 +2,8 @@
 
 Reap and report the server's status
 
+
+
 ## Usage
 
 Install with npm
@@ -55,6 +57,35 @@ Data storage
 Config
 
     /config.json
+
+```javascript
+{
+	"mailer": {
+		"service": "163", 
+		"auth": {
+			"user": "jkr3_servermon@163.com",
+			"pass": "dXN2a3FvcXl1cnd2bHd6ZQ"
+		},
+		"mailto":"jkr3_servermon@163.com",
+		"reportDataNum":10
+	},
+	"checker":{
+		"freememPercent":1.5,
+		"loadAvg":0.7,
+		"count":3 //连续检查超过此数字，则采取相应措施
+	},
+	"reaper":{
+		"interval":600000
+	},
+	"reporterStorage":{
+		"MaxStoreNum":100
+	},
+	"storage":{
+		"jsonFile":"db.json"
+	}
+}
+```
+
 
 ### Example
 ```javascript

@@ -1,6 +1,6 @@
-var reporter_mailer = require('../lib/reporter-mailer');
-var assert = require("assert");
-
+function checker(data) {
+	return true;
+}
 var testData = {
 	"t": "2015-06-05T04:59:23.860Z",
 	"id": "testId",
@@ -17,17 +17,36 @@ var testData = {
 	}
 };
 
+var storage = require('../lib/storage');
+
+var reporter_mailer = require('../lib/reporter-mailer')(checker);
+var assert = require("assert");
+
+
 var next = function() {};
 
 // 没有正确返回
 describe('reporter_mailer', function() {
-	this.timeout(5000);
-	describe('send mail (wait 3000ms...)', function() {
+	this.timeout(10000);
+	beforeEach(function(done) {
+		var status = storage.get('status') || {};
+
+		status.testId = {
+			os: {hostname:'test'},
+			data: [testData,testData]
+		};
+
+		storage.set('status', status);
+		done();
+	});
+	describe('send mail (wait...)', function() {
 		it('should successful', function(done) {
-			reporter_mailer(testData, next);
-    		setTimeout(done, 3000);
+			reporter_mailer(testData, next, function(err,info) {
+				if(!err){
+					done();
+				}
+			});
 		});
 
 	});
 });
-

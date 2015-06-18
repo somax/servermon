@@ -9,12 +9,17 @@
 		"reportDataNum":10
 	},
 	"checker":{
-		"freemem_percent":1.5
+		"freememPercent":1.5,
+		"loadAvg15":5,
+		"count":3
 	},
 	"reaper":{
-		"interval":6000
+		"interval":600000
 	},
 	"reporterStorage":{
 		"MaxStoreNum":100
+	},
+	"storage":{
+		"jsonFile":"db.json"
 	}
 }

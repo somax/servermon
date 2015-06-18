@@ -1,0 +1,45 @@
+html, body {
+  font-family: 'Roboto', sans-serif;
+  font-size:14px;
+  height:100%;
+  margin: 0px;
+  padding: 0px;
+}
+
+/* Toolbar area */
+
+
+
+md-toolbar h1 {
+  margin: auto;
+}
+
+/* Sidenav area */
+
+md-list .md-button {
+  color: inherit;
+  font-weight: 500;
+  text-align: left;
+  width: 100%;
+}
+md-list .md-button.selected {
+  color: #03a9f4;
+}
+
+md-sidenav  md-list {
+  padding: 0px 0px 8px 0px;
+}
+
+md-sidenav md-list-item.selected{
+  color:rgb(63,81,181);
+}
+md-sidenav md-list-item.selected:after{
+  content: ' ';
+  border: 2px solid rgb(63,81,181);
+  height: 52px;
+  position: absolute;
+  right: 0;
+}
+
+
+

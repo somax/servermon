@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>ServerMon</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <meta name="apple-mobile-web-app-title" content="ServerMon">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-seb-app-status-bar-style" content="black">
+
+    <link rel='stylesheet' href='./assets/fonts/roboto.css'>
+    <link rel="stylesheet" href="./bower_components/angular-material/angular-material.css"/>
+    <link rel="stylesheet" href="assets/app.css"/>
+  </head>
+	<body layout="row" ng-controller="MainCtrl as mc" ng-cloak>
+
+<!-- >>> left sidenav -->
+		<md-sidenav class="site-sidenav md-sidenav-left md-whiteframe-z2"
+		md-component-id="left"
+    md-is-locked-open="mc.isSidenavLocked || $mdMedia('gt-lg')"
+    >
+
+      <md-toolbar layout="row" class="md-whiteframe-z1">
+        <h1 class="md-heading">ServerMon</h1>
+
+        <md-button ng-click="mc.isSidenavLocked = !mc.isSidenavLocked" hide-gt-lg >
+          <!-- <md-icon md-svg-icon="pin" ></md-icon> -->
+          <md-icon md-svg-icon="{{mc.isSidenavLocked ? 'pin_down':'pin'}}" ></md-icon>
+        </md-button>
+
+      </md-toolbar>
+
+			<md-content flex role="navigation">
+				<md-list>
+					<md-subheader class="md-no-sticky">服务器列表
+          </md-subheader>
+
+
+          <md-list-item ng-repeat="item in mc.serverList" ng-click="mc.navigateTo(item, $event)" ng-class="{selected:item === mc.currentTitle}">
+          <div flex layout="row"  layout-align="space-between center">
+            {{item}}
+            <i><md-icon md-svg-icon="pc"></md-icon></i>
+          </div>
+          </md-list-item>
+
+					<md-divider></md-divider>
+
+          <md-subheader class="md-no-sticky">设置</md-subheader>
+					
+					<md-list-item ng-repeat="st in mc.settings">
+						<p> {{ st.name }} </p>
+            <md-switch ng-if="st.enabled !== undefined" class="md-secondary" ng-model="st.enabled"></md-switch>
+            <md-select ng-disabled="!mc.settings.autoFreash.enabled" ng-if="st.select !== undefined" ng-model="st.value">
+                    <md-option ng-repeat="v in st.select" value="{{v}}">{{v | timeFormat}} </md-option>
+            </md-select>
+					</md-list-item>
+						
+					<md-divider></md-divider>
+
+          <md-list-item >
+            <md-button href="/download/db.json" >
+              <div flex layout="row" layout-align="space-between center">
+                下载数据
+                <i><md-icon md-svg-icon="file_download"></md-icon></i>
+              </div>
+            </md-button>
+
+
+          </md-list-item>
+          <md-divider></md-divider>
+
+				</md-list>
+			</md-content>
+
+		</md-sidenav>
+
+<!-- <<< left sidenav -->
+
+
+
+
+<!-- >>> main content -->
+		<div layout="column" tabIndex="-1" role="main" flex>
+
+
+			<md-toolbar layout="row" class="md-whiteframe-z1">
+  			<md-button ng-if="!mc.isSidenavLocked" class="menu" hide-gt-lg ng-click="mc.toggleLeft()" aria-label="Show Navigator">
+    			<md-icon md-svg-icon="menu" ></md-icon>
+  			</md-button>
+  			<h1 class="md-headline"><span ng-if="!mc.currentId">左侧栏选择内容</span> {{mc.currentId}} <span class="md-caption">{{mc.data.time}}</span></h1>
+        <md-button ng-click="mc.freashData()">
+            <md-tooltip>
+              刷新 {{mc.currentTitle}}
+            </md-tooltip>
+            <md-icon md-svg-icon="cached"></md-icon>
+        </md-button>
+
+			</md-toolbar>
+      <!-- <md-content ng-view md-scroll-y flex layout-padding style="height: 600px;" > -->
+
+			<md-content flex md-scroll-y>
+<md-progress-linear ng-show="mc.progressShow" class="md-accent" md-mode="determinate" value="{{mc.progressVal}}" style="z-index:99;position:absolute;top:-5px;left:0"></md-progress-linear>
+      <!-- <div flex > -->
+        <!-- <div> -->
+        <md-content flex style="position:absolute;width:100%;top:0;bottom:0"  >
+
+
+        <div >
+          <p style="height:300px" echarts="mc.chart" option="mc.option" ></p>
+        </div>
+
+
+          <md-list ng-show="mc.data">
+          <!-- <md-subheader class="md-no-sticky">Os</md-subheader> -->
+          
+          <md-list-item layout-gt-sm="row" layout-sm="column" layout-align="space-between start">
+           <p><b>Hostname: </b>{{mc.data.os.hostname}}</p>
+            <p><b>Type: </b>{{mc.data.os.type}}</p>
+<!--          </md-list-item>
+
+          <md-list-item layout="row"> -->
+           
+           <p><b>Total Memory: </b>{{mc.data.os.totalmem | memsize}}G</p>
+
+           <p><b>CPUs (x{{mc.data.os.cpus.length}}): </b>{{mc.data.os.cpus[0].model}}</p>
+          </md-list-item>
+          <md-divider></md-divider>
+
+
+          <!-- <md-subheader class="md-no-sticky">Data</md-subheader> -->
+          <md-subheader >        
+
+            <div layout="row" layout-align="space-around center" class="md-3-line" >
+            <p flex>Time</p>
+            <p flex="15">FreeMem</p>
+            <p flex>LoadAvg1</p>
+            <p flex>LoadAvg5</p>
+            <p flex>LoadAvg15</p>
+            </div>
+
+          </md-subheader>
+
+
+          <md-list-item ng-repeat="item in mc.data.data | limitTo:20">
+          <!-- <div layout="row" layout-align="space-around center" with="100%"> -->
+            <p flex>{{item.t}}</p>
+            <p flex="15">{{item.data.mp}}%</p>
+            <p flex>{{item.data.loadavg[0] | number:4}}</p>
+            <p flex>{{item.data.loadavg[1] | number:4}}</p>
+            <p flex>{{item.data.loadavg[2] | number:4}}</p>
+          <!-- </div> -->
+          <!-- <md-divider ng-if="!$last"></md-divider> -->
+          </md-list-item>
+        </md-list>
+
+        </md-content>
+        <!-- </div> -->
+<!-- </div> -->
+
+
+			</md-content>
+
+
+
+		</div>
+
+<!-- <<< main content -->
+
+
+
+		<script src="js/load.js"></script>
+
+		<script src="bower_components/angular/angular.min.js"></script>
+		<!-- <script src="bower_components/angular-route/angular-route.min.js"></script> -->
+		<script src="bower_components/angular-animate/angular-animate.min.js"></script>
+		<script src="bower_components/angular-aria/angular-aria.min.js"></script>
+		<script src="bower_components/angular-material/angular-material.min.js"></script>
+    <script src="bower_components/echarts/build/dist/echarts-all.js"></script>
+		<script src="js/app.js"></script>
+	</body>
+</html>
