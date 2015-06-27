@@ -14,7 +14,7 @@ var
     argv = require('argv'),
     _package = require('./package.json'),
     Servermon = require('./lib/servermon'),
-    log = require('./lib/log'),
+    log = require('log'),
     guid = require('guid');
 
 var servermon = new Servermon();

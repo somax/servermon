@@ -31,8 +31,8 @@
 			.controller('MainCtrl', MainCtrl)
 			.factory('ProgressBar',ProgressBar)
 			.filter('memsize',memsize)
-			.filter('timeFormat',timeFormat);
-
+			.filter('timeFormat',timeFormat)
+			;
 
 		/**
 		 * memsize 
