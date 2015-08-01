@@ -110,7 +110,7 @@
         <md-content flex style="position:absolute;width:100%;top:0;bottom:0"  >
 
         <div >
-          <p style="height:300px" echarts="mc.chart" option="mc.option" ></p>
+          <p style="height:300px" echarts="mc.chart" option="mc.option" not-merge="true"></p>
         </div>
 
 
@@ -119,14 +119,14 @@
           
           <md-list-item layout-gt-sm="row" layout-sm="column" layout-align="space-between start">
            <p><b>Hostname: </b>{{mc.data.os.hostname}}</p>
-            <p><b>Type: </b>{{mc.data.os.type}}</p>
+           <p><b>Type: </b>{{mc.data.os.type}}</p>
 <!--          </md-list-item>
 
           <md-list-item layout="row"> -->
            
            <p><b>Total Memory: </b>{{mc.data.os.totalmem | memsize}}G</p>
 
-           <p><b>CPUs (x{{mc.data.os.cpus.length}}): </b>{{mc.data.os.cpus[0].model}}</p>
+           <p flex="40"><b>CPUs (x{{mc.data.os.cpus.length}}): </b>{{mc.data.os.cpus[0].model}}</p>
           </md-list-item>
           <md-divider></md-divider>
 
@@ -145,7 +145,7 @@
           </md-subheader>
 
 
-          <md-list-item ng-repeat="item in mc.data.data | limitTo:20">
+          <md-list-item ng-repeat="item in mc.data.data | limitTo:100 | orderBy:'-t'">
           <!-- <div layout="row" layout-align="space-around center" with="100%"> -->
             <p flex>{{item.t}}</p>
             <p flex="15">{{item.data.mp}}%</p>

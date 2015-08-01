@@ -1,6 +1,6 @@
 (function() {
 	angular.module('DbService', [])
-		.service('LogsDb', LogsDb);
+		.service('LogsDb', ['$http',LogsDb]);
 
 	function LogsDb($http) {
 		return {
@@ -12,4 +12,5 @@
 			}
 		};
 	}
+
 })();

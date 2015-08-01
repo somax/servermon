@@ -1,0 +1,25 @@
+{
+	"mailer": {
+		"service": "163",
+		"auth": {
+			"user": "yourmail@163.com",
+			"pass": "encodingpassword"
+		},
+		"mailto":"yourmail@163.com",
+		"reportDataNum":10
+	},
+	"checker":{
+		"freeMemPercent":1.5,
+		"loadAvg":0.7,
+		"count":3
+	},
+	"reaper":{
+		"interval":600000
+	},
+	"reporterStorage":{
+		"MaxStoreNum":100
+	},
+	"storage":{
+		"jsonFile":"db.json"
+	}
+}

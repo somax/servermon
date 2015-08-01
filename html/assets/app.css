@@ -26,6 +26,14 @@ md-list .md-button.selected {
   color: #03a9f4;
 }
 
+md-list a.md-button{
+  margin:0;
+  padding: 0 16px;
+}
+
+md-list p{
+  padding: 5px;
+}
 md-sidenav  md-list {
   padding: 0px 0px 8px 0px;
 }
