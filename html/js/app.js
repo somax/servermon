@@ -25,11 +25,11 @@
 		console.info(__appname + ' init');
 
 		angular.module(__appname, ['ngMaterial', 'tryMaterial'].concat(modules))
-			.config(['$mdThemingProvider', '$mdIconProvider',Config])
-			.controller('MainCtrl', ['$mdSidenav', 'LogsDb', '$q', '$scope', '$timeout', '$interval', '$mdDialog',MainCtrl])
-			.factory('ProgressBar', [ProgressBar])
-			.filter('memsize', [memsize])
-			.filter('timeFormat', [timeFormat]);
+			.config(Config)
+			.controller('MainCtrl', MainCtrl)
+			.factory('ProgressBar', ProgressBar)
+			.filter('memsize', memsize)
+			.filter('timeFormat', timeFormat);
 
 		/**
 		 * 格式化内存
@@ -123,7 +123,7 @@
 			// .primaryPalette('brown')
 			.accentPalette('red');
 		}
-
+		Config.$inject = ['$mdThemingProvider', '$mdIconProvider']
 
 		/**
 		 * 主控制器
@@ -435,7 +435,7 @@
 			mc.option = angular.copy(preOption);
 		}
 
-
+		MainCtrl.$inject = ['$mdSidenav', 'LogsDb', '$q', '$scope', '$timeout', '$interval', '$mdDialog']
 
 	}
 
