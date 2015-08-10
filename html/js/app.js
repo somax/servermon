@@ -142,7 +142,7 @@
 
 			LogsDb.list().then(function(res) {
 				mc.serverList = res.data;
-				mc.navigateTo(mc.serverList[3]);
+				mc.navigateTo(mc.serverList[0]);
 			});
 
 			mc.toggleLeft = function() {
@@ -295,7 +295,7 @@
 			// chart options
 			var preOption = {
 				title: {
-					text: 'test',
+					text: '...',
 					subtext: 'ServerMon',
 					x: 5
 				},

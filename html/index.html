@@ -145,7 +145,7 @@
           </md-subheader>
 
 
-          <md-list-item ng-repeat="item in mc.data.data | limitTo:100 | orderBy:'-t'">
+          <md-list-item ng-repeat="item in mc.data.data  | orderBy:'-t' | limitTo:100">
           <!-- <div layout="row" layout-align="space-around center" with="100%"> -->
             <p flex>{{item.t}}</p>
             <p flex="15">{{item.data.mp}}%</p>
