@@ -101,7 +101,7 @@
 		 * @param {service} $mdThemingProvider
 		 * @param {service} $mdIconProvider
 		 */
-		function Config($mdThemingProvider, $mdIconProvider) {
+		function Config($mdThemingProvider, $mdIconProvider, $httpProvider) {
 
 
 			$mdIconProvider
@@ -122,8 +122,36 @@
 			$mdThemingProvider.theme('default')
 			// .primaryPalette('brown')
 			.accentPalette('red');
+
+			window.httpProvider = $httpProvider;
+
+			function testInterceptors($q,$rootScope) {
+			  return {
+			  	request: function(config) {
+			       console.log('-=-=-=',config);
+
+			       var def = $q.defer();
+			       def.promise.then(function(){alert('okok')},function(){alert('errrrrr')})
+			       $rootScope.$emit('test',def,config);
+			       window.config = config;
+			       window.def = def;
+
+			       return config;
+			    },
+			    // response: function(response) {
+
+			    //    return response;
+			    // }
+			  };
+			}
+			testInterceptors.$inject = ['$q','$rootScope'];
+
+			$httpProvider.interceptors.push(testInterceptors);
+
+
+
 		}
-		Config.$inject = ['$mdThemingProvider', '$mdIconProvider']
+		Config.$inject = ['$mdThemingProvider', '$mdIconProvider','$httpProvider'];
 
 		/**
 		 * 主控制器
@@ -134,7 +162,14 @@
 		 * @param {service} $timeout
 		 * @param {service} $interval
 		 */
-		function MainCtrl($mdSidenav, LogsDb, $q, $scope, $timeout, $interval, $mdDialog) {
+		function MainCtrl($mdSidenav, LogsDb, $q, $rootScope,$scope, $timeout, $interval, $mdDialog) {
+
+
+
+			$rootScope.$on('test',function(e,def,config){
+				console.log('>>on test>>',e,def,config);
+			})
+
 			var mc = this;
 			// mc.currentId = null;
 
@@ -435,7 +470,7 @@
 			mc.option = angular.copy(preOption);
 		}
 
-		MainCtrl.$inject = ['$mdSidenav', 'LogsDb', '$q', '$scope', '$timeout', '$interval', '$mdDialog']
+		MainCtrl.$inject = ['$mdSidenav', 'LogsDb', '$q', '$rootScope','$scope', '$timeout', '$interval', '$mdDialog']
 
 	}
 
@@ -459,6 +494,10 @@
 	 */
 	function tryMaterial() {
 		angular.module('tryMaterial', [])
+			.run(['$q','$http',function($q,$http){
+				window.http = $http;
+				window.q = $q;
+			}])
 			.controller('tryCtrl', ['$scope',function($scope) {
 
 			}]);
