@@ -103,6 +103,11 @@ Specify the reaper's interval.
 
 
 
+## DELETDATA 
+
+> !! Unrecoverable, BE CAREFUL !!
+`curl -X "DELETE" http://SERVERHOST:1338/api/status?q=REAPER-ID`
+
 ## Test
 ```bash
 $ npm install -g mocha

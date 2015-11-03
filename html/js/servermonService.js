@@ -1,20 +1,15 @@
 (function() {
 
 	var modules = [
-		'servermonService.test1',
-		'servermonService.test2'
+		'servermonService.util',
+		'servermonService.progressbar'
 	];
 
 	loadJS(modules).then(function() {
 
-		function serviceTest(serviceTest2) {
-			return function() {
-				return 'serviceTest'+ serviceTest2;
-			};
-		}
+		angular.module('servermonService', modules);
 
-		angular.module('servermonService', modules)
-			.factory('serviceTest', serviceTest);
+
 	});
 
 })();
