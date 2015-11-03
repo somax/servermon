@@ -1,6 +1,4 @@
 node_modules
 .DS_Store
 *.log
-db.json
-config.json
 html/bower_components

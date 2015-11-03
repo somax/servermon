@@ -20,6 +20,6 @@
 		"MaxStoreNum":100
 	},
 	"storage":{
-		"jsonFile":"db.json"
+		"jsonFile":"db/db20151103.json"
 	}
 }
