@@ -1,6 +1,6 @@
 {
   "name": "ServerMon",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Reap and report the server's status.",
   "main": "./index.js",
   "scripts": {
