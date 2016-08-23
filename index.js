@@ -19,74 +19,87 @@ var
 
 var servermon = new Servermon();
 
-//define options
-argv.option([{
-    name: 'reaper',
-    short: 'r',
-    type: 'boolean',
-    description: 'Run as reaper.',
-    example: "'servermon -r' or 'servermon --reaper'"
-}, {
-    name: 'server',
-    short: 's',
-    type: 'boolean',
-    description: 'Run as server.',
-    example: "'servermon -s' or 'servermon --server'"
-}, {
-    name: 'host',
-    short: 'H',
-    type: 'string',
-    description: 'Specify the server\'s hostname. (default: 127.0.0.1)',
-    example: "'servermon -r -H 127.0.0.1' or 'servermon --reaper --host=127.0.0.1'"
-}, {
-    name: 'port',
-    short: 'p',
-    type: 'int',
-    description: 'Specify the port. (default: 1337)',
-    example: "'servermon -s -p 1337' or 'servermon --server --port=1337' or 'servermon -r -p 1337' or 'servermon --reaper --port=1337'"
-}, {
-    name: 'reaperid',
-    short: 'n',
-    type: 'string',
-    description: 'Specify the reaper\'s id.',
-    example: "'servermon -n serv1' or 'servermon --reaperid=serv1'"
-}, {
-    name: 'interval',
-    short: 'i',
-    type: 'int',
-    description: 'Specify the reaper\'s interval.',
-    example: "'servermon -i 5000' or 'servermon --interval=5000'"
-}]);
+function main() {
+
+    //define options
+    argv.option([{
+        name: 'reaper',
+        short: 'r',
+        type: 'boolean',
+        description: 'Run as reaper.',
+        example: "'servermon -r' or 'servermon --reaper'"
+    }, {
+        name: 'server',
+        short: 's',
+        type: 'boolean',
+        description: 'Run as server.',
+        example: "'servermon -s' or 'servermon --server'"
+    }, {
+        name: 'host',
+        short: 'H',
+        type: 'string',
+        description: 'Specify the server\'s hostname. (default: 127.0.0.1)',
+        example: "'servermon -r -H 127.0.0.1' or 'servermon --reaper --host=127.0.0.1'"
+    }, {
+        name: 'port',
+        short: 'p',
+        type: 'int',
+        description: 'Specify the port. (default: 1337)',
+        example: "'servermon -s -p 1337' or 'servermon --server --port=1337' or 'servermon -r -p 1337' or 'servermon --reaper --port=1337'"
+    }, {
+        name: 'reaperid',
+        short: 'n',
+        type: 'string',
+        description: 'Specify the reaper\'s id.',
+        example: "'servermon -n serv1' or 'servermon --reaperid=serv1'"
+    }, {
+        name: 'interval',
+        short: 'i',
+        type: 'int',
+        description: 'Specify the reaper\'s interval.',
+        example: "'servermon -i 5000' or 'servermon --interval=5000'"
+    }]);
 
 
-argv.version(_package.version);
+    argv.version(_package.version);
 
-// get description from package.json
-argv.info(_package.description);
+    // get description from package.json
+    argv.info(_package.description);
 
-// get options(arguments)
-var options = argv.run().options;
+    // get options(arguments)
+    var options = argv.run().options;
 
-// set default 
-var port = options.port;
-var host = options.host;
-var interval = options.interval;
+    // set default 
+    var port = options.port;
+    var host = options.host;
+    var interval = options.interval;
 
-// dev 
-// todo use NODE_ENV
-var reaperId = options.reaperid;
+    // dev 
+    // todo use NODE_ENV
+    var reaperId = options.reaperid;
 
 
-//run as server
-if (options.server) {
-    servermon.server(port, host);
+    //run as server
+    if (options.server) {
+        servermon.server(port, host);
+    }
+
+    // run as client (reper)
+    else if (options.reaper) {
+        servermon.reaper(reaperId, port, host, interval);
+    }
+    // help
+    else {
+        argv.help();
+    }
+
 }
 
-// run as client (reper)
-else if (options.reaper) {
-    servermon.reaper(reaperId, port, host, interval);
-}
-// help
-else {
-    argv.help();
+// Check if run directly
+if (require.main === module) {
+    console.log('run directly...');
+    main();
+} else {
+    console.log('require on module....');
+    module.exports = servermon;
 }

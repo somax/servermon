@@ -11,7 +11,7 @@
 	"checker":{
 		"freeMemPercent":1.5,
 		"loadAvg":0.7,
-		"count":3
+		"count":10
 	},
 	"reaper":{
 		"interval":600000
@@ -20,6 +20,6 @@
 		"MaxStoreNum":100
 	},
 	"storage":{
-		"jsonFile":"db/db20151103.json"
+		"jsonFile":"db/db20160823.json"
 	}
 }
